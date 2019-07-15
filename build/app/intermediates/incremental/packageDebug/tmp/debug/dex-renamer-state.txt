@@ -1,0 +1,4 @@
+#Mon Jul 15 14:26:48 CEST 2019
+base.0=/Users/tovarnaidej/mobx_flutter_app/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
