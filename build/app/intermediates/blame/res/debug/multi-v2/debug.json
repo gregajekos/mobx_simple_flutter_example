@@ -12,6 +12,24 @@
                         "endLines": "6",
                         "endColumns": "12",
                         "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "3",
+                        "startColumns": "4",
+                        "startOffsets": "101",
+                        "endLines": "7",
+                        "endColumns": "12",
+                        "endOffsets": "393"
+                    }
+                },
+                {
+                    "source": "/Users/tovarnaidej/.gradle/caches/transforms-1/files-1.1/polar-ble-sdk.aar/b9d27500e14e6df811be5fd9dc6b3010/res/values/values.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "45",
+                        "endOffsets": "96"
                     }
                 }
             ]

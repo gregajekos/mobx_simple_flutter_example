@@ -1,11 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import 'models/BleModel.dart';
 import 'models/TimeTask.dart';
 
 final timeTask = TimeTask();
+final bleModel = BleModel();
+
+const platform = const MethodChannel('com.tovarnaidej.eclipse');
+final String deviceAddress = "setDeviceAddress";
+final String UPDATECALLBACK = "updateHrCallback";
 
 void main() => runApp(MyApp());
 
@@ -38,11 +45,35 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     timer = Timer.periodic(
         Duration(seconds: 5), (Timer t) => timeTask.updateTime());
+
+    connectDevice("A0:9E:1A:20:BE:0C");
+    bleCallbackHandler();
+  }
+
+  Future connectDevice(String address) async {
+    var parameters = {'address': address};
+    await platform.invokeMethod(deviceAddress, new Map.from(parameters));
   }
 
   @override
   void dispose() {
     timer?.cancel();
+  }
+
+  void bleCallbackHandler() {
+    setMethodCallHandler((MethodCall call) {
+      if (call.method == UPDATECALLBACK) {
+        if (call.arguments != null) {
+          //TODO needs conversion to json/map object
+          print("results " + call.arguments.toString());
+          bleModel.updateValue(call.arguments.toString());
+        }
+      }
+    });
+  }
+
+  void setMethodCallHandler(Future handler(MethodCall call)) {
+    platform.setMethodCallHandler(handler);
   }
 
   @override
@@ -67,6 +98,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               'Starting time (non observable) ${timeTask.nonObservableTime}',
+            ),
+            Text(
+              'Received value:',
+            ),
+            Observer(
+              builder: (_) => Text(
+                    '${bleModel.receivedValue}',
+                  ),
             ),
           ],
         ),

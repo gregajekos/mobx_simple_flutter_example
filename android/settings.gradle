@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':polar-ble-sdk', ':polar-protobuf-release'
 
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
 
